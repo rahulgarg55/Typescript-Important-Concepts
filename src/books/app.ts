@@ -1,13 +1,13 @@
 import  express from 'express';
 import bodyParser from 'body-parser';
-import db from './db';
+import db from './db.js';
 
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
 
-app.get('/books', async (req, res) => {
+app.get('/books', async (_req, res) => {
   try {
     const books = await db.any('SELECT * FROM books-crud');
     res.json(books);
