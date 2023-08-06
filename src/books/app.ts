@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 app.get('/books', async (req, res) => {
   try {
-    const books = await db.any('SELECT * FROM books');
+    const books = await db.any('SELECT * FROM books-crud');
     res.json(books);
   } catch (error) {
     console.error(error);
@@ -19,7 +19,7 @@ app.get('/books', async (req, res) => {
 
 app.get('/books/:id', async (req, res) => {
   try {
-    const book = await db.one('SELECT * FROM books WHERE id = $1', req.params.id);
+    const book = await db.one('SELECT * FROM books-crud WHERE id = $1', req.params.id);
     res.json(book);
   } catch (error) {
     console.error(error);
@@ -31,7 +31,7 @@ app.post('/books', async (req, res) => {
   try {
     const { title, author } = req.body;
     const result = await db.one(
-      'INSERT INTO books (title, author) VALUES ($1, $2) RETURNING id',
+      'INSERT INTO books-crud (title, author) VALUES ($1, $2) RETURNING id',
       [title, author]
     );
     res.status(201).json(result);
@@ -44,7 +44,7 @@ app.post('/books', async (req, res) => {
 app.put('/books/:id', async (req, res) => {
   try {
     const { title, author } = req.body;
-    await db.none('UPDATE books SET title = $1, author = $2 WHERE id = $3', [
+    await db.none('UPDATE books-crud SET title = $1, author = $2 WHERE id = $3', [
       title,
       author,
       req.params.id
@@ -58,7 +58,7 @@ app.put('/books/:id', async (req, res) => {
 
 app.delete('/books/:id', async (req, res) => {
   try {
-    await db.none('DELETE FROM books WHERE id = $1', req.params.id);
+    await db.none('DELETE FROM books-crud WHERE id = $1', req.params.id);
     res.status(200).json({ message: 'Book deleted successfully' });
   } catch (error) {
     console.error(error);

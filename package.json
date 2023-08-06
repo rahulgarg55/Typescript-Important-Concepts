@@ -2,6 +2,7 @@
   "name": "dummy",
   "version": "1.0.0",
   "main": "dist/app.js",
+  "type":"module",
   "scripts": {
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
@@ -32,3 +33,4 @@
   "keywords": [],
   "description": ""
 }
+
