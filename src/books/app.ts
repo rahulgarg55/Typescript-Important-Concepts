@@ -31,7 +31,7 @@ app.post('/books', async (req, res) => {
   try {
     const { title, author } = req.body;
     const result = await db.one(
-      'INSERT INTO books-crud (title, author) VALUES ($1, $2) RETURNING id',
+      'INSERT INTO "bookstore"."books" (title, author) VALUES ($1, $2) RETURNING id',
       [title, author]
     );
     res.status(201).json(result);
@@ -40,6 +40,7 @@ app.post('/books', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 app.put('/books/:id', async (req, res) => {
   try {
